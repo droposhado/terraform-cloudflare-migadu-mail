@@ -1,19 +1,19 @@
-resource "cloudflare_record" "priority_10" {
-  zone_id  = var.zone_id
+resource "cloudflare_dns_record" "priority_10" {
+  zone_id = var.cloudflare_zone_id
   name     = "@"
-  value    = "aspmx1.migadu.com"
+  content  = "aspmx1.migadu.com"
   type     = "MX"
   priority = 10
-  ttl      = 3600
+  ttl      = var.default_ttl
   proxied  = false
 }
 
-resource "cloudflare_record" "priority_20" {
-  zone_id  = var.zone_id
+resource "cloudflare_dns_record" "priority_20" {
+  zone_id = var.cloudflare_zone_id
   name     = "@"
-  value    = "aspmx2.migadu.com"
+  content  = "aspmx2.migadu.com"
   type     = "MX"
   priority = 20
-  ttl      = 3600
+  ttl      = var.default_ttl
   proxied  = false
 }

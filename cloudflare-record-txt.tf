@@ -1,26 +1,26 @@
-resource "cloudflare_record" "dmarc" {
-  zone_id = var.zone_id
+resource "cloudflare_dns_record" "dmarc" {
+  zone_id = var.cloudflare_zone_id
   name    = "_dmarc"
-  value   = "v=DMARC1; p=quarantine; adkim=s; aspf=s; rua=mailto:dmarcreport@${var.domain}; ruf=mailto:dmarcreport@${var.domain}; pct=100; fo=0:1:d:s;"
+  content = "v=DMARC1; p=quarantine; adkim=s; aspf=s; rua=mailto:dmarcreport@${var.domain}; ruf=mailto:dmarcreport@${var.domain}; pct=100; fo=0:1:d:s;"
   type    = "TXT"
-  ttl     = 3600
+  ttl     = var.default_ttl
   proxied = false
 }
 
-resource "cloudflare_record" "spf" {
-  zone_id = var.zone_id
+resource "cloudflare_dns_record" "spf" {
+  zone_id = var.cloudflare_zone_id
   name    = "@"
-  value   = "v=spf1 include:spf.migadu.com -all"
+  content = "v=spf1 include:spf.migadu.com -all"
   type    = "TXT"
-  ttl     = 3600
+  ttl     = var.default_ttl
   proxied = false
 }
 
-resource "cloudflare_record" "hosted" {
-  zone_id = var.zone_id
+resource "cloudflare_dns_record" "verification" {
+  zone_id = var.cloudflare_zone_id
   name    = "@"
-  value   = "hosted-email-verify=vfxufmw7"
+  content = "hosted-email-verify=${var.hosted_email_verify}"
   type    = "TXT"
-  ttl     = 3600
+  ttl     = var.default_ttl
   proxied = false
 }

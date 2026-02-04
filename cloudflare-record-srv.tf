@@ -1,13 +1,12 @@
-resource "cloudflare_record" "autodiscover" {
+resource "cloudflare_dns_record" "autodiscover" {
   # Outlook autodiscovery mechanism
-  zone_id = var.zone_id
-  name    = "_autodiscover._tcp"
-  type    = "SRV"
+  zone_id  = var.cloudflare_zone_id
+  name     = "_autodiscover._tcp"
+  type     = "SRV"
+  ttl      = var.default_ttl
+  priority = 0
 
-  data {
-    service  = "_autodiscover"
-    proto    = "_tcp"
-    name     = "autodiscover.${var.domain}"
+  data = {
     priority = 0
     weight   = 1
     port     = 443
@@ -15,16 +14,15 @@ resource "cloudflare_record" "autodiscover" {
   }
 }
 
-resource "cloudflare_record" "submissions" {
+resource "cloudflare_dns_record" "submissions" {
   # SMTP outgoing
-  zone_id = var.zone_id
-  name    = "_submissions._tcp"
-  type    = "SRV"
+  zone_id  = var.cloudflare_zone_id
+  name     = "_submissions._tcp"
+  type     = "SRV"
+  ttl      = var.default_ttl
+  priority = 0
 
-  data {
-    service  = "_submissions"
-    proto    = "_tcp"
-    name     = "submissions.${var.domain}"
+  data = {
     priority = 0
     weight   = 1
     port     = 465
@@ -32,16 +30,15 @@ resource "cloudflare_record" "submissions" {
   }
 }
 
-resource "cloudflare_record" "imaps" {
+resource "cloudflare_dns_record" "imaps" {
   # IMAP incoming
-  zone_id = var.zone_id
-  name    = "_imaps._tcp"
-  type    = "SRV"
+  zone_id  = var.cloudflare_zone_id
+  name     = "_imaps._tcp"
+  type     = "SRV"
+  ttl      = var.default_ttl
+  priority = 0
 
-  data {
-    service  = "_imaps"
-    proto    = "_tcp"
-    name     = "imaps.${var.domain}"
+  data = {
     priority = 0
     weight   = 1
     port     = 993
@@ -49,16 +46,15 @@ resource "cloudflare_record" "imaps" {
   }
 }
 
-resource "cloudflare_record" "pop3s" {
+resource "cloudflare_dns_record" "pop3s" {
   # POP3 incoming
-  zone_id = var.zone_id
-  name    = "_pop3s._tcp"
-  type    = "SRV"
+  zone_id  = var.cloudflare_zone_id
+  name     = "_pop3s._tcp"
+  type     = "SRV"
+  ttl      = var.default_ttl
+  priority = 0
 
-  data {
-    service  = "_pop3s"
-    proto    = "_tcp"
-    name     = "pop3s.${var.domain}"
+  data = {
     priority = 0
     weight   = 1
     port     = 995
